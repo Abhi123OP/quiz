@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .correct {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .wrong {
+            background-color: #f44336;
+            color: white;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Quiz Test</h1>
+        
+        <div class="question" id="q1">
+            <p>When was Google Chrome first released?</p>
+            <label><input type="radio" name="q1" value="a"> 2007</label>
+            <label><input type="radio" name="q1" value="b"> 2008</label>
+            <label><input type="radio" name="q1" value="c"> 2009</label>
+            <label><input type="radio" name="q1" value="d"> 2010</label>
+        </div>
+        
+        <div class="question" id="q2">
+            <p>Which browser introduced tabbed browsing?</p>
+            <label><input type="radio" name="q2" value="a"> Internet Explorer</label>
+            <label><input type="radio" name="q2" value="b"> Firefox</label>
+            <label><input type="radio" name="q2" value="c"> Safari</label>
+            <label><input type="radio" name="q2" value="d"> Opera</label>
+        </div>
+        
+        <div class="question" id="q3">
+            <p>Who created the World Wide Web?</p>
+            <label><input type="radio" name="q3" value="a"> Tim Berners-Lee</label>
+            <label><input type="radio" name="q3" value="b"> Marc Andreessen</label>
+            <label><input type="radio" name="q3" value="c"> Steve Jobs</label>
+            <label><input type="radio" name="q3" value="d"> Larry Page</label>
+        </div>
+        
+        <div class="buttons-container">
+            <button id="submit">Submit</button>
+            <button id="reset">Reset</button>
+        </div>
+
+        <div class="result" id="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const answers = {
+            q1: "b",
+            q2: "d",
+            q3: "a"
+        };
+
+        const submitButton = document.getElementById('submit');
+        const resetButton = document.getElementById('reset');
+        const resultDiv = document.getElementById('result');
+
+        submitButton.addEventListener('click', () => {
+            let score = 0;
+            let resultHTML = '';
+
+            ['q1', 'q2', 'q3'].forEach(questionId => {
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+                const correctAnswer = answers[questionId];
+
+                if (selected) {
+                    if (selected.value === correctAnswer) {
+                        resultHTML += `<div class="correct">Question: ${questionId} - Correct</div>`;
+                        score++;
+                    } else {
+                        resultHTML += `<div class="wrong">Question: ${questionId} - Wrong</div>`;
+                    }
+                }
+            });
+
+            resultHTML += `<div>Your score: ${score} / 3</div>`;
+            resultDiv.innerHTML = resultHTML;
+            resultDiv.style.display = 'block';
+        });
+
+        resetButton.addEventListener('click', () => {
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            resultDiv.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
